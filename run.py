@@ -10,7 +10,7 @@ sentences = IWE.split_into_sentences(splitted_docs)
 # cut into words
 cut_sentences = IWE.cut()
 
-# load cut sentences
+# save cut sentences as external txt file
 IWE.save_sentences(cut_sentences)
 
 # train model

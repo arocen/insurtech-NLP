@@ -4,7 +4,9 @@ import os
 import re
 import jieba
 from gensim.models import word2vec
+from dotenv import load_dotenv
 
+load_dotenv() # load .env file
 
 # load and split documents
 
@@ -16,6 +18,7 @@ def load_doc(doc_folder_path:str=os.environ.get('doc_folder_path'))->list[str]:
     folder_path: 所有txt文件所在文件夹
     '''
     # Get a list of text files in the folder and sort them by filename
+
     txt_files = sorted([f for f in os.listdir(doc_folder_path) if f.endswith(".txt")])
     
     docs_by_year = []
@@ -96,7 +99,6 @@ def save_sentences(cut_sentences:list[str], cut_sentences_path=os.environ.get('c
     except:
         print(f"Error saving cut_sentences to {cut_sentences_path}")
     return
-
 
 
 # train model
