@@ -19,7 +19,11 @@ print(sims)
 sims2 = model.wv.most_similar('人工智能', topn=10)
 print(sims2)
 
-sims3 = model.wv.most_similar('物联网', topn=10)
+sims3 = model.wv.most_similar('大数据', topn=10)
 print(sims3)
+
+
+# To-do: think about other ways to figure out keywords about insurtech
+
 
 # To-do: visualize word embeddings
