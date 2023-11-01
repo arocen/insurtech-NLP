@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 
 load_dotenv() # load .env file
 
+
+
 # load and split documents
 
 def load_doc(doc_folder_path:str=os.environ.get('doc_folder_path'))->list[str]:
@@ -69,9 +71,9 @@ def split_into_sentences(splitted_docs:list[str])->list[str]:
 
 
 
-# tokenize
+# cut into words
 
-def cut(my_dict_path:str=os.environ.get('my_dict_path'))->list[str]:
+def cut(sentences:list[str], my_dict_path:str=os.environ.get('my_dict_path'))->list[str]:
     '''
     将列表中的句子切分为词语，返回列表, 列表中每一个元素为一个分词后的句子
 
@@ -80,9 +82,9 @@ def cut(my_dict_path:str=os.environ.get('my_dict_path'))->list[str]:
     if my_dict_path:
         # 让jieba加载自定义词典
         jieba.load_userdict(my_dict_path)
-
+    
     cut_sentences = []
-    for sentence in cut_sentences:
+    for sentence in sentences:
         tokens = [token for token in jieba.cut(sentence)]
         result = ' '.join(tokens)
         cut_sentences.append(result)
@@ -102,12 +104,16 @@ def save_sentences(cut_sentences:list[str], cut_sentences_path=os.environ.get('c
 
 
 # train model
+
 def train(sentences=os.environ.get('cut_sentences_path'), model_save_path=os.environ.get('model_save_path')):
     '''train model'''
     sentences = word2vec.LineSentence(sentences)
 
+    # build the vocabulary before training
+    # model.build_vocab(sentences, update=False)
+
     # train model, adjust the parameters
     model = word2vec.Word2Vec(sentences, vector_size=100, window=5, min_count=5)
-
+    
     # save model
     model.save(model_save_path)

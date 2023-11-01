@@ -11,7 +11,7 @@ splitted_docs = IWE.split_docs(docs_by_year)
 sentences = IWE.split_into_sentences(splitted_docs)
 
 # cut into words
-cut_sentences = IWE.cut()
+cut_sentences = IWE.cut(sentences)
 
 # save cut sentences
 IWE.save_sentences(cut_sentences, cut_sentences_path=os.environ.get('test_cut_sentences_path'))
