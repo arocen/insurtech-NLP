@@ -85,7 +85,7 @@ def cut(sentences:list[str], my_dict_path:str=os.environ.get('my_dict_path'))->l
     
     cut_sentences = []
     for sentence in sentences:
-        tokens = [token for token in jieba.cut(sentence)]
+        tokens = [token for token in jieba.cut(sentence)]    # To-do: consider removing stopwords
         result = ' '.join(tokens)
         cut_sentences.append(result)
     return cut_sentences
