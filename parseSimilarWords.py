@@ -1,4 +1,4 @@
-# parse print out results of similar words queries
+# parse print-out results of similar words queries
 # e.g.
 '''
 保险科技
@@ -11,10 +11,11 @@
 
 from dotenv import load_dotenv
 import os
+import ast
 
 load_dotenv()
 results_path = os.environ.get("query_results")
-
+save_path = os.environ.get("words_save_path")
 
 def load(path:str=results_path)->list[str]:
     '''load results from txt file'''
@@ -33,14 +34,24 @@ def extractWords(rlist:list[str])->list[str]:
         header, similar_words = parts[0], parts[1]
         headers.append(header)
         # To-do: transfer str into list
-        similar_words = list[similar_words]
-        sims.append(similar_words)
+        similar_words = ast.literal_eval(similar_words)
+        for pair in similar_words:
+            sim = pair[0]
+            sims.append(sim)
 
 
     
     words = headers + sims
     # drop duplicate words
+    words = list(set(words))
     return words
+
+def save_words(save_path, words):
+    with open(save_path, "w", encoding="utf-8") as f:
+        for word in words:
+            f.write(word + "\n")
+    return
+
 
 # 根据相似度可视化某一条查询的结果
 
@@ -49,6 +60,7 @@ def extractWords(rlist:list[str])->list[str]:
 rlist = load()
 # print(rlist)
 words = extractWords(rlist)
-print("number of header words:", len(words))
+print("number of words:", len(words))
 print(words)
 # 保存到txt
+save_words(save_path, words)
